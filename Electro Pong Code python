@@ -1,0 +1,32 @@
+import pygame, sys
+
+#Setup : Makes items(in this case the ball and paddles)
+
+
+#General Setup
+pygame.init()
+clock = pygame.time.Clock()
+
+#Setting up the main window 
+screen_width= 1280 
+screen_height = 960 
+#above can mess up with game play, so just change dimentions
+
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption('Electro Pong')
+
+#Loop : Moves items based on code or imputs 
+#Ex. I make a rectangle in setup and in the loop i have it updating to go one pixel to the right.
+
+while True:
+    #handling inputs
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    #updating the window
+    pygame.display.flip()
+    clock.tick(100)
+
+
