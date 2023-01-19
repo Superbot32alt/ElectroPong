@@ -15,18 +15,66 @@ screen_height = 960
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Electro Pong')
 
+#Drawing items
+#Display surface(uses the display object(line 15) think of this as the blank sheet of paper to draw things on. You can draw on it with pygame.draw. You can only have 1 of these 
+#Easier Drawing - using a regular suface to draw it makes it easier to hold objects, as well as orginizing them. You can have as many regular surfaces as you want but you have to attach them all to the display surface
+#a rect - a rectangle, used like a hitbox, or used to make items. I will make a rect below 
+#to draw an object you have to use pygame.draw(surface, color, rect)
+#make colors using (r,g,b) or use a color object(pygame.color('name') find the names online)
+
+ball = pygame.Rect(screen_width/2 - 15,screen_height/2 - 15,30,30)
+#player is on the right
+player = pygame.Rect(screen_width - 20,screen_height/2 - 70,10,140)
+#opponent is on the left
+opponent = pygame.Rect(10, screen_height/2 - 70,10, 140)
+
+#background coloring
+bg_color = pygame.Color('grey12')
+light_grey = (200,200,200)
+
 #Loop : Moves items based on code or imputs 
 #Ex. I make a rectangle in setup and in the loop i have it updating to go one pixel to the right.
+#ball speeds
+ball_speed_x = 7
+ball_speed_y = 7
 
 while True:
-    #handling inputs
+
+    #handling quitting
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
-    #updating the window
+    #animations
+    ball.x += ball_speed_x
+    ball.y += ball_speed_y
+
+    #collisions
+    if ball.top <= 0 or ball.bottom >= screen_height:
+        ball_speed_y*=-1
+    if ball.left <= 0 or ball.right >= screen_width:
+        ball_speed_x*=-1
+
+
+
+
+    #visuals
+    
+    screen.fill(bg_color)
+    #paddles
+    pygame.draw.rect(screen, light_grey, player)
+    pygame.draw.rect(screen, light_grey, opponent)
+    #ball
+    pygame.draw.ellipse(screen, light_grey, ball)
+    #lines in the middle
+    pygame.draw.aaline(screen, light_grey,(screen_width/2,0), (screen_width/2,screen_height))
+
+
+    
+    #helps draw things on the screen
     pygame.display.flip()
-    clock.tick(100)
+    #fps the computer will run it at
+    clock.tick(60)
 
 
